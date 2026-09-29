@@ -1,0 +1,8 @@
+{
+  "name": "Remix BunkIQ",
+  "description": "Hyper-customized college attendance calculator and bunk planner for Atharva Jadhav with safe bunk recommendations and schedule logger.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

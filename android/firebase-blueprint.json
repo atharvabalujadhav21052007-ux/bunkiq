@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with geofence settings, USN, and live attendance metrics",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "usn": { "type": "string" },
+        "role": { "type": "string" },
+        "baselineAttended": { "type": "number" },
+        "baselineConducted": { "type": "number" },
+        "currentPercentage": { "type": "number" },
+        "safeBunkBalance": { "type": "number" },
+        "isDanger": { "type": "boolean" },
+        "campusLat": { "type": "number" },
+        "campusLng": { "type": "number" },
+        "geofenceRadiusMeters": { "type": "number" },
+        "autoAttendanceEnabled": { "type": "boolean" },
+        "lastCampusStatus": { "type": "string" }
+      },
+      "required": ["userId", "email"]
+    },
+    "DayAttendanceRecord": {
+      "title": "DayAttendanceRecord",
+      "description": "Daily attendance log containing lecture slots and holiday status",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "userId": { "type": "string" },
+        "isHoliday": { "type": "boolean" },
+        "holidayReason": { "type": "string" },
+        "isSunday": { "type": "boolean" }
+      },
+      "required": ["date", "userId"]
+    },
+    "ClassBroadcast": {
+      "title": "ClassBroadcast",
+      "description": "Official class notices and alerts posted by CR / Admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "tag": { "type": "string" },
+        "targetDate": { "type": "string" },
+        "postedBy": { "type": "string" },
+        "timestampMillis": { "type": "number" }
+      },
+      "required": ["id", "title", "message"]
+    },
+    "ClassScheduleOverride": {
+      "title": "ClassScheduleOverride",
+      "description": "Global timetable adjustments like faculty proxy, CAE test, cancelled slot, or holiday",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "slotNumber": { "type": "string" },
+        "type": { "type": "string" },
+        "newSubject": { "type": "string" },
+        "weight": { "type": "number" },
+        "note": { "type": "string" },
+        "author": { "type": "string" }
+      },
+      "required": ["id", "date", "slotNumber", "type"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile, USN, and attendance metrics"
+    },
+    "/users/{userId}/days/{date}": {
+      "schema": { "$ref": "#/entities/DayAttendanceRecord" },
+      "description": "Daily attendance status and slots for user"
+    },
+    "/class_broadcasts/{broadcastId}": {
+      "schema": { "$ref": "#/entities/ClassBroadcast" },
+      "description": "Class announcements and bulletins"
+    },
+    "/class_overrides/{overrideId}": {
+      "schema": { "$ref": "#/entities/ClassScheduleOverride" },
+      "description": "Global class timetable and schedule overrides"
+    }
+  }
+}
